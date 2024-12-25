@@ -1,5 +1,6 @@
 # Overall Goal
 Create a lite version of a blogging website. This should utilise public platforms like github to host the webpages. The overall task is to create a blogging system that uses external sources to store the blog data. 
+
 > Just Self Host Your Blogs
 > Will Also Provide some free external api's for kiddle script users.
 
