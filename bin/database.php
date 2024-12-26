@@ -13,6 +13,8 @@ class Database_Services {
         $this->username = $username;
         $this->password = $password;
         $this->dbname = $dbname;
+
+        @$this->connect()
     }
 
     private function prevent_sql_injection($statement){
@@ -25,29 +27,21 @@ class Database_Services {
                 $pdo = new PDO('mysql:host=$host;dbname=$dbname',$username,$password); 
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
                 $connection = $pdo; 
-                return $connection->quote($string);
+                return $connection->quote($statement);
             } catch (\Throwable $th) {
                 $this->error_log($th); 
                 return null; 
             }
     }
 
-    
-function prevent_sql_injections($string){
-      
-}
-
-function detect_sql_injection(){
+function detect_sql_injection($statement){
     try {
-        $username = ""; 
-        $password = ""; 
-        $host = ""; 
-        $dbname = ""; 
+        $username = $this->username; $password = $this->password ; $host = $this->host; $dbname = $this->dbname;
         $pdo = new PDO('mysql:host=$host;dbname=$dbname',$username,$password); 
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
         $connection = $pdo; 
-        $safe_code = $connection->quote($string);
-        if (strcmp($safe_code,$string)){
+        $safe_code = $connection->quote($statement);
+        if (strcmp($safe_code,$statement)){
             return TRUE; 
         }
     } catch (\Throwable $th) {
