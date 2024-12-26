@@ -17,7 +17,45 @@ class Database_Services {
 
     private function prevent_sql_injection($statement){
       #This Private Function will be used to prevent SQL injections in the system database 
+           try {
+                $username = $this->username; 
+                $password = $this->password ; 
+                $host = $this->host; 
+                $dbname = $this->dbname; 
+                $pdo = new PDO('mysql:host=$host;dbname=$dbname',$username,$password); 
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+                $connection = $pdo; 
+                return $connection->quote($string);
+            } catch (\Throwable $th) {
+                $this->error_log($th); 
+                return null; 
+            }
     }
+
+    
+function prevent_sql_injections($string){
+      
+}
+
+function detect_sql_injection(){
+    try {
+        $username = ""; 
+        $password = ""; 
+        $host = ""; 
+        $dbname = ""; 
+        $pdo = new PDO('mysql:host=$host;dbname=$dbname',$username,$password); 
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
+        $connection = $pdo; 
+        $safe_code = $connection->quote($string);
+        if (strcmp($safe_code,$string)){
+            return TRUE; 
+        }
+    } catch (\Throwable $th) {
+        $this->error_log($th); 
+        return null; 
+    }
+    return FALSE; 
+}
 
     private function connect() {
         try {
