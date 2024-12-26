@@ -17,6 +17,20 @@ class Database_Services {
         @$this->connect()
     }
 
+    private function error_log($error_)
+    {
+        try {
+            $FileHandle = fopen($this->error_file, 'a+');
+            $date = date("m/d/Y");
+            $errorMessage = $error_;
+            $curlError = $date . ' Error: ' . $errorMessage . "\n\n";
+            fwrite($FileHandle, $curlError);
+            return fclose($FileHandle);
+        } catch (\Throwable $th) {
+            return FALSE;
+        }
+    }
+
     private function prevent_sql_injection($statement){
       #This Private Function will be used to prevent SQL injections in the system database 
            try {
@@ -58,7 +72,7 @@ function detect_sql_injection($statement){
             return true;
         } catch(PDOException $e) {
             // Log the error or handle it appropriately for your application
-            error_log("Database connection failed: " . $e->getMessage()); 
+            $this->error_log("Database connection failed: " . $e->getMessage()); 
             return false;
         }
     }
@@ -78,7 +92,7 @@ function detect_sql_injection($statement){
             }
             return $stmt->execute();
         } catch (PDOException $e) {
-            error_log("Create operation failed: " . $e->getMessage());
+            $this->error_log("Create operation failed: " . $e->getMessage());
             return false;
         }
     }
@@ -115,7 +129,7 @@ function detect_sql_injection($statement){
             }
             return $stmt->execute();
         } catch (PDOException $e) {
-            error_log("Update operation failed: " . $e->getMessage());
+            $this->error_log("Update operation failed: " . $e->getMessage());
             return false;
         }
     }
@@ -129,7 +143,7 @@ function detect_sql_injection($statement){
         try {
             return $stmt->execute();
         } catch (PDOException $e) {
-            error_log("Delete operation failed: " . $e->getMessage());
+            $this->error_log("Delete operation failed: " . $e->getMessage());
             return false;
         }
     }
