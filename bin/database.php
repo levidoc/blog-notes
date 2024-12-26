@@ -1,4 +1,8 @@
 <?php
+# Title: External Sources Version 1.0.0.0
+# Authour: LEVIDOC
+# Description: Remote Storage For The Data used for static sites
+# Build: 25/12/2024
 
 class Database_Services {
 
