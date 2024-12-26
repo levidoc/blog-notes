@@ -123,7 +123,7 @@ class WiseMan_Blog {
                         }
                     }
                 };
-                xhr.send(`state=${encodeURIComponent(this.state)}&blog_code=${encodeURIComponent(blog_code)}`); // Send form parameter
+                xhr.send(`state=${encodeURIComponent(this.state)}&blog_code=${encodeURIComponent(blog_code)}&mode=blog_pages`); // Send form parameter
             });
         }
         //Once All The Pages In The Blog Have Been Identified, 
