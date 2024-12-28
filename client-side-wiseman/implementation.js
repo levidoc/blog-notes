@@ -1,3 +1,5 @@
+//I HATE JAVASCRIPT 
+
 //Reading The Url Functions 
 function read_cabinet_url_code(){
     var url = get_current_url(); 
