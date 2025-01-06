@@ -1,4 +1,5 @@
 //I HATE JAVASCRIPT 
+// My Ever Growing Hatred for this language i swear 
 
 //Reading The Url Functions 
 function read_cabinet_url_code(){
