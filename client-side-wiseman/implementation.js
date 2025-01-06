@@ -35,3 +35,20 @@ function get_current_url(){
     let url = new URL(window.location.href);
     return url; 
 }
+
+const dbName = "blogDatabase";
+const storeName = "blogPosts";
+let db;
+
+const request = indexedDB.open(dbName, 1);
+
+request.onerror = function(event) {
+    console.error("IndexedDB error:", event.target.errorCode);
+};
+
+request.onupgradeneeded = function(event) {
+    db = event.target.result;
+    if (!db.objectStoreNames.contains(storeName)) {
+        db.createObjectStore(storeName, { keyPath: 'id' });
+    }
+};
